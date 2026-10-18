@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Muestrario de estilos — EstuTrabajo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Quicksand:wght@500;600;700&family=Sora:wght@400;600;700&family=Baloo+2:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #EDEDF2;
+      color: #222;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .intro {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 34px 20px 8px;
+      text-align: center;
+    }
+    .intro h1 { font-size: 24px; margin: 0 0 8px; }
+    .intro p { color: #5A5A66; margin: 0 0 4px; font-size: 14px; }
+    .intro strong { color: #222; }
+    .elegido { display: none; }
+
+    /* ---------- Estructura base de cada demo ---------- */
+    .demo {
+      position: relative;
+      max-width: 1080px;
+      margin: 22px auto;
+      border-radius: 18px;
+      overflow: hidden;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid rgba(0, 0, 0, .08);
+      transition: outline .15s ease;
+    }
+    .demo.seleccionado { outline: 4px solid #222; }
+
+    /* Encabezado de la opción */
+    .demo-opcion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px dashed var(--line);
+    }
+    .demo-opcion b { font-size: 15px; letter-spacing: .02em; }
+    .demo-opcion small { color: var(--muted); display: block; font-size: 12px; }
+    .elegir {
+      border: 1.5px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .elegir:hover { background: var(--accent); border-color: var(--accent); }
+
+    /* Barra superior simulada */
+    .demo-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .demo-marca { font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); }
+    .demo-marca i { color: var(--accent); }
+    .demo-nav { display: flex; gap: 18px; font-size: 14px; font-weight: 600; }
+    .demo-nav a { opacity: .85; }
+    .demo-nav a.on { text-decoration: underline; text-underline-offset: 4px; }
+    .demo-cta {
+      border: none;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 9px 16px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--btn-ink);
+      cursor: pointer;
+    }
+
+    /* Héroe con ejemplo de tarjetas */
+    .demo-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      align-items: center;
+      padding: 34px 30px 36px;
+      background: var(--band);
+    }
+    .demo-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--tag-bg, rgba(128, 128, 128, .14));
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .demo-txto h1 {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      line-height: 1.15;
+      margin: 0 0 10px;
+      color: var(--ink);
+    }
+    .demo-txto h1 em { font-style: normal; color: var(--accent); }
+    .demo-txto p { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+    .demo-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .demo-btn {
+      border: none;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 11px 20px;
+      border-radius: var(--radius-btn, 10px);
+      background: var(--accent);
+      color: var(--btn-ink);
+      cursor: pointer;
+      box-shadow: var(--btn-shadow, none);
+    }
+    .demo-btn.ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--line-strong, var(--muted));
+    }
+
+    .demo-cards { display: grid; gap: 12px; }
+    .demo-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius, 14px);
+      padding: 14px 16px;
+    }
+    .demo-card small { display: block; text-align: right; color: var(--muted); font-size: 11px; margin-bottom: 2px; }
+    .demo-card h3 { font-family: var(--font-head); margin: 0 0 4px; font-size: 15px; }
+    .demo-card .meta { color: var(--muted); font-size: 12px; margin: 0 0 6px; display: flex; align-items: center; gap: 5px; }
+    .demo-card .meta i { color: var(--accent); }
+    .demo-card .salario { font-size: 16px; font-weight: 700; margin: 0 0 8px; font-family: var(--font-head); }
+    .demo-card .salario span { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .demo-card .tags { display: flex; gap: 6px; margin-bottom: 10px; }
+    .demo-card .tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--tag-bg, rgba(128, 128, 128, .14));
+      color: var(--tag-ink, var(--ink));
+    }
+    .demo-mini {
+      border: none;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--btn-ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Pie: paleta */
+    .demo-pie { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 22px; flex-wrap: wrap; }
+    .demo-pie .swatches { display: flex; gap: 8px; align-items: center; }
+    .demo-pie .sw { width: 30px; height: 30px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, .15); }
+    .demo-pie .font-note { font-size: 12px; color: var(--muted); }
+
+    /* ---------- Conceptos ---------- */
+    .demo-a {
+      --bg: #0B0E14;
+      --band: #101627;
+      --card: #161F33;
+      --ink: #F2F6FB;
+      --muted: #93A0B2;
+      --accent: #B6F04C;
+      --btn-ink: #0B0E14;
+      --line: rgba(255, 255, 255, .10);
+      --line-strong: #3A4A5E;
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius: 12px;
+      --radius-btn: 10px;
+      --btn-shadow: 0 6px 18px rgba(182, 240, 76, .35);
+      --tag-bg: rgba(182, 240, 76, .12);
+      --tag-ink: #D6F98F;
+    }
+
+    .demo-b {
+      --bg: #FFFAF3;
+      --band: #F4ECFE;
+      --card: #FFFFFF;
+      --ink: #4E4356;
+      --muted: #8A7A96;
+      --accent: #8F7BFA;
+      --btn-ink: #FFFFFF;
+      --line: #F0E7F7;
+      --line-strong: #D8C9EA;
+      --font-head: 'Quicksand', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius: 22px;
+      --radius-btn: 999px;
+      --btn-shadow: 0 8px 20px rgba(143, 123, 250, .35);
+      --tag-bg: #F3EEFF;
+      --tag-ink: #6E5AC2;
+    }
+
+    .demo-c {
+      --bg: #FAF2E6;
+      --band: #F3E5D2;
+      --card: #FFFFFF;
+      --ink: #2E2A24;
+      --muted: #7A6E5F;
+      --accent: #D95D39;
+      --accent2: #E9B44C;
+      --accent3: #2F5D50;
+      --btn-ink: #FFFFFF;
+      --line: #E7D9C2;
+      --line-strong: #2E2A24;
+      --font-head: 'Sora', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius: 14px;
+      --radius-btn: 8px;
+      --btn-shadow: 0 5px 14px rgba(217, 93, 57, .30);
+      --tag-bg: #FBE9E0;
+      --tag-ink: #B24A2C;
+    }
+
+    .demo-d {
+      --bg: #FFFDF5;
+      --band: #FFD23F;
+      --card: #FFFFFF;
+      --ink: #17110C;
+      --muted: #6B6158;
+      --accent: #FFD23F;
+      --accent2: #FF2E63;
+      --btn-ink: #17110C;
+      --line: #17110C;
+      --line-strong: #17110C;
+      --font-head: 'Baloo 2', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius: 18px;
+      --radius-btn: 999px;
+      --btn-shadow: 3px 3px 0 #17110C;
+      --tag-bg: #17110C;
+      --tag-ink: #FFD23F;
+    }
+    .demo-d .demo-card { border-width: 2px; }
+    .demo-d .demo-cta,
+    .demo-d .demo-mini,
+    .demo-d .demo-btn { box-shadow: 2.5px 2.5px 0 #17110C; border: 1.5px solid #17110C; }
+    .demo-d .demo-btn.ghost { background: #fff; }
+    .demo-d .demo-bar { border-bottom-width: 2px; }
+    .demo-d .demo-tag { background: #17110C; color: #FFD23F; }
+
+    .demo-d .sw { border: 1.5px solid #17110C; }
+
+    @media (max-width: 760px) {
+      .demo-hero { grid-template-columns: 1fr; padding: 26px 20px; }
+      .demo-bar { flex-wrap: wrap; }
+      .demo-nav { order: 3; width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="intro">
+    <h1>Muestrario de estilos — EstuTrabajo</h1>
+    <p>Cuatro conceptos muy distintos, hechos sobre el mismo contenido para que compares rápido.</p>
+    <p class="elegido" id="elegido"><strong>Elegiste la opción:</strong> <span id="elegido-nombre"></span>. Dímelo y aplico ese estilo a todo el sitio.</p>
+  </div>
+
+
+  <!-- ================= A · NOCTURNO NEÓN ================= -->
+  <section class="demo demo-a" id="demo-a">
+    <div class="demo-opcion">
+      <div>
+        <b>Opción A — Nocturno Neón</b>
+        <small>Oscuro, brillante y tecnológico · lime + cian sobre grafito</small>
+      </div>
+      <button class="elegir" data-nombre="A · Nocturno Neón">Elegir esta</button>
+    </div>
+
+    <header class="demo-bar">
+      <div class="demo-marca"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</div>
+      <nav class="demo-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="demo-cta">Ver ofertas</button>
+    </header>
+
+    <div class="demo-hero">
+      <div class="demo-txto">
+        <span class="demo-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h1>Estudia y trabaja <em>sin renunciar</em> a nada</h1>
+        <p>Ofertas con horarios flexibles, pensadas para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="demo-btns">
+          <button class="demo-btn">Buscar empleos</button>
+          <button class="demo-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <div class="demo-cards">
+        <article class="demo-card">
+          <small>Hoy</small>
+          <h3>Auxiliar de tienda</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+          <p class="salario">$ 1.300.000 <span>por mes</span></p>
+          <div class="tags"><span class="tag">Ventas</span><span class="tag">Medio tiempo</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+        <article class="demo-card">
+          <small>hace 2 días</small>
+          <h3>Tutor de matemáticas</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín · Academia Descartes</p>
+          <p class="salario">$ 45.000 <span>por hora</span></p>
+          <div class="tags"><span class="tag">Educación</span><span class="tag">Horario flexible</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+      </div>
+    </div>
+
+    <footer class="demo-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#0B0E14" title="#0B0E14"></span>
+        <span class="sw" style="background:#161F33" title="#161F33"></span>
+        <span class="sw" style="background:#B6F04C" title="#B6F04C"></span>
+        <span class="sw" style="background:#4FE0FF" title="#4FE0FF"></span>
+        <span class="sw" style="background:#FF4D8D" title="#FF4D8D"></span>
+      </div>
+      <span class="font-note">Tipografía: Space Grotesk + Inter</span>
+    </footer>
+  </section>
+
+
+  <!-- ================= B · PASTEL DULCE ================= -->
+  <section class="demo demo-b" id="demo-b">
+    <div class="demo-opcion">
+      <div>
+        <b>Opción B — Pastel Dulce</b>
+        <small>Suave, amigable y juvenil · lila, melocotón y menta sobre crema</small>
+      </div>
+      <button class="elegir" data-nombre="B · Pastel Dulce">Elegir esta</button>
+    </div>
+
+    <header class="demo-bar">
+      <div class="demo-marca"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</div>
+      <nav class="demo-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="demo-cta">Ver ofertas</button>
+    </header>
+
+    <div class="demo-hero">
+      <div class="demo-txto">
+        <span class="demo-tag"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h1>Tu primer empleo, <em>sin dejar</em> de estudiar</h1>
+        <p>Ofertas con horarios flexibles, pensadas para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="demo-btns">
+          <button class="demo-btn">Buscar empleos</button>
+          <button class="demo-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <div class="demo-cards">
+        <article class="demo-card">
+          <small>Hoy</small>
+          <h3>Auxiliar de tienda</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+          <p class="salario">$ 1.300.000 <span>por mes</span></p>
+          <div class="tags"><span class="tag">Ventas</span><span class="tag">Medio tiempo</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+        <article class="demo-card">
+          <small>hace 2 días</small>
+          <h3>Tutor de matemáticas</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín · Academia Descartes</p>
+          <p class="salario">$ 45.000 <span>por hora</span></p>
+          <div class="tags"><span class="tag">Educación</span><span class="tag">Horario flexible</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+      </div>
+    </div>
+
+    <footer class="demo-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#FFFAF3" title="#FFFAF3"></span>
+        <span class="sw" style="background:#8F7BFA" title="#8F7BFA"></span>
+        <span class="sw" style="background:#6FCFB3" title="#6FCFB3"></span>
+        <span class="sw" style="background:#FFB08A" title="#FFB08A"></span>
+        <span class="sw" style="background:#FFA7C4" title="#FFA7C4"></span>
+      </div>
+      <span class="font-note">Tipografía: Quicksand + Inter</span>
+    </footer>
+  </section>
+
+
+  <!-- ================= C · CÁLIDO LATINO ================= -->
+  <section class="demo demo-c" id="demo-c">
+    <div class="demo-opcion">
+      <div>
+        <b>Opción C — Cálido Latino</b>
+        <small>Cálido y cercano · terracota, mostaza y verde profundo sobre crema</small>
+      </div>
+      <button class="elegir" data-nombre="C · Cálido Latino">Elegir esta</button>
+    </div>
+
+    <header class="demo-bar">
+      <div class="demo-marca"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</div>
+      <nav class="demo-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="demo-cta">Ver ofertas</button>
+    </header>
+
+    <div class="demo-hero">
+      <div class="demo-txto">
+        <span class="demo-tag"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h1>Encuentra un empleo que <em>te quede bien</em></h1>
+        <p>Ofertas con horarios flexibles, pensadas para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="demo-btns">
+          <button class="demo-btn">Buscar empleos</button>
+          <button class="demo-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <div class="demo-cards">
+        <article class="demo-card">
+          <small>Hoy</small>
+          <h3>Auxiliar de tienda</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+          <p class="salario">$ 1.300.000 <span>por mes</span></p>
+          <div class="tags"><span class="tag">Ventas</span><span class="tag">Medio tiempo</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+        <article class="demo-card">
+          <small>hace 2 días</small>
+          <h3>Tutor de matemáticas</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín · Academia Descartes</p>
+          <p class="salario">$ 45.000 <span>por hora</span></p>
+          <div class="tags"><span class="tag">Educación</span><span class="tag">Horario flexible</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+      </div>
+    </div>
+
+    <footer class="demo-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#FAF2E6" title="#FAF2E6"></span>
+        <span class="sw" style="background:#D95D39" title="#D95D39"></span>
+        <span class="sw" style="background:#E9B44C" title="#E9B44C"></span>
+        <span class="sw" style="background:#2F5D50" title="#2F5D50"></span>
+        <span class="sw" style="background:#2E2A24" title="#2E2A24"></span>
+      </div>
+      <span class="font-note">Tipografía: Sora + Inter</span>
+    </footer>
+  </section>
+
+
+  <!-- ================= D · POP VIBRANTE ================= -->
+  <section class="demo demo-d" id="demo-d">
+    <div class="demo-opcion">
+      <div>
+        <b>Opción D — Pop Vibrante</b>
+        <small>Divertido y con actitud · amarillo, rosa y negro con bordes gruesos</small>
+      </div>
+      <button class="elegir" data-nombre="D · Pop Vibrante">Elegir esta</button>
+    </div>
+
+    <header class="demo-bar">
+      <div class="demo-marca"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</div>
+      <nav class="demo-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="demo-cta">Ver ofertas</button>
+    </header>
+
+    <div class="demo-hero">
+      <div class="demo-txto">
+        <span class="demo-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h1>Estudiar y trabajar <em>sí se puede</em></h1>
+        <p>Ofertas con horarios flexibles, pensadas para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="demo-btns">
+          <button class="demo-btn">Buscar empleos</button>
+          <button class="demo-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <div class="demo-cards">
+        <article class="demo-card">
+          <small>Hoy</small>
+          <h3>Auxiliar de tienda</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+          <p class="salario">$ 1.300.000 <span>por mes</span></p>
+          <div class="tags"><span class="tag">Ventas</span><span class="tag">Medio tiempo</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+        <article class="demo-card">
+          <small>hace 2 días</small>
+          <h3>Tutor de matemáticas</h3>
+          <p class="meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín · Academia Descartes</p>
+          <p class="salario">$ 45.000 <span>por hora</span></p>
+          <div class="tags"><span class="tag">Educación</span><span class="tag">Horario flexible</span></div>
+          <button class="demo-mini">Inscribirme</button>
+        </article>
+      </div>
+    </div>
+
+    <footer class="demo-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#FFFDF5" title="#FFFDF5"></span>
+        <span class="sw" style="background:#FFD23F" title="#FFD23F"></span>
+        <span class="sw" style="background:#FF2E63" title="#FF2E63"></span>
+        <span class="sw" style="background:#4FE0FF" title="#4FE0FF"></span>
+        <span class="sw" style="background:#17110C" title="#17110C"></span>
+      </div>
+      <span class="font-note">Tipografía: Baloo 2 + Inter</span>
+    </footer>
+  </section>
+
+
+  <div style="max-width:1080px; margin:0 auto 40px; padding:0 20px; text-align:center; color:#5A5A66; font-size:13px;">
+    ¿No te convence ninguna? Dímelo y ajuslo la que más se acerque o propongo otras (por ejemplo: gradiente tech, minimalista con acento neón sobre blanco, estilo revista editorial...).
+  </div>
+
+  <script>
+    // Marca la opción elegida
+    var elegido = document.getElementById('elegido');
+    var elegidoNombre = document.getElementById('elegido-nombre');
+    var demos = document.querySelectorAll('.demo');
+
+    document.querySelectorAll('.elegir').forEach(function (boton) {
+      boton.addEventListener('click', function () {
+        demos.forEach(function (d) { d.classList.remove('seleccionado'); });
+        var demo = boton.closest('.demo');
+        demo.classList.add('seleccionado');
+        elegidoNombre.textContent = boton.getAttribute('data-nombre');
+        elegido.style.display = 'block';
+        elegido.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  </script>
+
+</body>
+</html>

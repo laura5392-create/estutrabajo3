@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Aplica el tema guardado ANTES de pintar la pagina (evita el destello blanco).
+       Debe quedar aqui: antes de cualquier <link> de estilos. theme.js lo confirma despues. -->
+  <script>
+    (function () {
+      try {
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+      } catch (e) { /* localStorage bloqueado: se queda en claro */ }
+    })();
+  </script>
+
+  <title>Buscar empleos - EstuTrabajo</title>
+
+  <meta name="description" content="Explora ofertas de trabajo flexibles para estudiantes y filtra por tipo de trabajo, ciudad, horario o palabra clave.">
+  <meta name="theme-color" content="#C6F24E">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23C6F24E'/%3E%3Cpath fill='%2317110C' d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+  <a href="#contenido" class="skip-link">Saltar al contenido principal</a>
+
+  <noscript>
+    <p class="sin-noscript">
+      Activa JavaScript para usar los filtros y el orden de las ofertas.
+      Sin él puedes leerlas todas, pero no filtrarlas.
+    </p>
+  </noscript>
+
+  <header class="encabezado">
+
+    <div class="contenedor barra-superior">
+
+      <a class="marca" href="index.html"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</a>
+
+      <nav class="menu" aria-label="Menú principal" id="menu-principal">
+        <a href="index.html">Inicio</a>
+        <a class="activo" href="buscar-empleos.html" aria-current="page">Buscar empleos</a>
+        <a href="mi-perfil.html">Mi perfil</a>
+      </nav>
+
+      <a class="boton" href="buscar-empleos.html">Ver ofertas</a>
+
+    </div>
+
+    <!-- Búsqueda principal, estilo portal de empleo -->
+    <div class="busqueda-principal">
+      <div class="contenedor">
+        <form action="buscar-empleos.html" method="get" role="search">
+
+          <label class="campo-busqueda" for="que-buscar">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input
+              type="search"
+              id="que-buscar"
+              name="busqueda"
+              placeholder="Qué: tienda, tutoría..."
+              autocomplete="off"
+            >
+          </label>
+
+          <label class="campo-busqueda" for="donde-buscar">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <select id="donde-buscar" name="ciudad">
+              <option value="">Dónde: todas las ciudades</option>
+              <option value="Bogotá">Bogotá</option>
+              <option value="Medellín">Medellín</option>
+              <option value="Manizales">Manizales</option>
+                <option value="Pensilvania">Pensilvania, Caldas</option>
+              <option value="Cali">Cali</option>
+              <option value="Pereira">Pereira</option>
+              <option value="Ibagué">Ibagué</option>
+            </select>
+          </label>
+
+          <button type="submit" class="boton">Buscar Empleo</button>
+
+        </form>
+      </div>
+    </div>
+
+  </header>
+
+
+  <main id="contenido">
+
+    <section class="titulo-pagina">
+
+      <div class="contenedor">
+
+        <p class="etiqueta">Encuentra tu oportunidad</p>
+
+        <h1>
+          Buscar <span class="resaltado">empleos</span>
+        </h1>
+
+        <p>
+          Filtra por tipo de trabajo, ciudad y horario
+          para encontrar la oferta que se adapte a tu vida.
+        </p>
+
+      </div>
+
+    </section>
+
+
+      <!-- Calculadora de encaje: ¿cuál oferta cabe con tus horas? -->
+      <section class="panel-encaje contenedor" id="panel-encaje" aria-labelledby="encaje-titulo">
+
+        <details id="encaje-desplegable">
+          <summary>
+            <span class="encaje-resumen-icono" aria-hidden="true">
+              <i class="fa-solid fa-calendar-check"></i>
+            </span>
+
+            <span class="encaje-resumen-texto">
+              <strong id="encaje-titulo">¿Cuál oferta encaja con tus horas?</strong>
+              <small id="encaje-subtitulo">
+                Marca cuando estás libre y te digo qué tanto te sirve cada puesto.
+              </small>
+            </span>
+
+            <span class="encaje-resumen-cuento" id="encaje-cuento" hidden></span>
+            <i class="fa-solid fa-chevron-down encaje-flecha" aria-hidden="true"></i>
+          </summary>
+
+          <div class="encaje-cuerpo">
+
+            <p class="encaje-instruccion">
+              Pulsa cada bloque que tengas <strong>libre de clases</strong>.
+              Puedes marcar los que quieras: no hace falta todos.
+            </p>
+
+            <div class="encaje-tabla" role="group" aria-labelledby="encaje-titulo">
+              <div class="encaje-borde" aria-hidden="true"></div>
+
+              <span class="encaje-dia-cabecera" aria-hidden="true"></span>
+              <span class="encaje-dia-cabecera">Lun</span>
+              <span class="encaje-dia-cabecera">Mar</span>
+              <span class="encaje-dia-cabecera">Mié</span>
+              <span class="encaje-dia-cabecera">Jue</span>
+              <span class="encaje-dia-cabecera">Vie</span>
+              <span class="encaje-dia-cabecera">Sáb</span>
+              <span class="encaje-dia-cabecera">Dom</span>
+
+              <span class="encaje-franja-nombre">Mañana<small>6–12</small></span>
+              <span class="encaje-franja-nombre">Tarde<small>12–18</small></span>
+              <span class="encaje-franja-nombre">Noche<small>18–22</small></span>
+            </div>
+
+            <p class="encaje-pie">
+              <span class="encaje-vacio" id="encaje-vacio" hidden>
+                Marca al menos un bloque para ver los puntajes.
+              </span>
+              <button type="button" class="enlace enlace-boton" id="encaje-limpiar">
+                Borrar mi disponibilidad
+              </button>
+            </p>
+
+          </div>
+        </details>
+
+      </section>
+
+      <!-- Fila de herramientas: solo encaje y simulador de sueldo -->
+      <div class="herramientas contenedor">
+        <button type="button" class="herramienta" id="abrir-sueldo">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i>
+          <span>
+            <strong>¿Cuánto me queda de verdad?</strong>
+            <small>Convierte un sueldo bruto en neto, con las deducciones de Colombia</small>
+          </span>
+        </button>
+
+        <button type="button" class="herramienta" id="abrir-carta">
+          <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+          <span>
+            <strong>Escribe tu carta de presentación</strong>
+            <small>Te la redacto con tu perfil y la oferta que elijas</small>
+          </span>
+        </button>
+
+
+      </div>
+
+    <section class="resultado-layout contenedor">
+
+      <!-- Filtros laterales -->
+      <aside class="panel-filtros" aria-label="Filtros de búsqueda">
+
+        <h4>Filtros</h4>
+        <div class="grupo-filtro">
+          <label for="filtro-tipo">Tipo de trabajo</label>
+
+          <select id="filtro-tipo">
+            <option value="">Todos</option>
+            <option value="Ventas">Ventas</option>
+            <option value="Atención al cliente">Atención al cliente</option>
+            <option value="Administración">Administración</option>
+            <option value="Servicios">Servicios</option>
+            <option value="Educación">Educación</option>
+            <option value="Tecnología">Tecnología</option>
+          </select>
+        </div>
+
+        <div class="grupo-filtro">
+          <label for="filtro-ciudad">Ciudad</label>
+
+          <select id="filtro-ciudad">
+            <option value="">Todas</option>
+            <option value="Bogotá">Bogotá</option>
+            <option value="Medellín">Medellín</option>
+            <option value="Manizales">Manizales</option>
+                <option value="Pensilvania">Pensilvania, Caldas</option>
+            <option value="Cali">Cali</option>
+            <option value="Pereira">Pereira</option>
+            <option value="Ibagué">Ibagué</option>
+          </select>
+        </div>
+
+        <div class="grupo-filtro">
+          <label for="filtro-horario">Horario</label>
+
+          <select id="filtro-horario">
+            <option value="">Todos</option>
+            <option value="Medio tiempo">Medio tiempo</option>
+            <option value="Tiempo completo">Tiempo completo</option>
+            <option value="Horario flexible">Horario flexible</option>
+            <option value="Fines de semana">Fines de semana</option>
+          </select>
+        </div>
+
+        <div class="grupo-filtro">
+          <label for="filtro-busqueda">Palabra clave</label>
+
+          <input
+            type="search"
+            id="filtro-busqueda"
+            placeholder="Ej: tienda, café, tutoría..."
+          >
+        </div>
+
+        <button type="button" class="boton boton-ghost" id="limpiar-filtros">Limpiar filtros</button>
+
+      </aside>
+
+
+
+
+      <!-- Resultados -->
+      <div class="lista-empleos">
+
+        <div class="resultado-meta">
+
+          <p class="resultados" id="resultados" aria-live="polite">
+            <strong id="resultados-cantidad">16</strong> ofertas disponibles
+          </p>
+
+          <p class="ordenar">
+            <label for="ordenar">Ordenar por:</label>
+            <select id="ordenar">
+              <option value="relevancia">Relevancia</option>
+              <option value="recientes">Más recientes</option>
+              <option value="antiguas">Más antiguas</option>
+              <option value="salario-alto">Salario más alto</option>
+              <option value="salario-bajo">Salario más bajo</option>
+              <option value="empresa">Empresa (A–Z)</option>
+            </select>
+          </p>
+
+        </div>
+
+        <div class="tarjetas-empleos" id="lista-empleos">
+
+          <article class="tarjeta empleo" data-tipo="Ventas" data-ciudad="Bogotá" data-horario="Medio tiempo">
+
+            <p class="fecha">Hoy <span class="badge-nuevo">Nuevo</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Auxiliar de tienda</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#F6C982; color:#785113;">A</span>
+              <strong>Almacenes El Sol</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.300.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Ventas</span>
+              <span class="tag tag-horario">Medio tiempo</span>
+            </div>
+
+            <p class="descripcion">
+              Atención a clientes en tienda de ropa,
+              ideal para tardes entre semana.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Atención al cliente" data-ciudad="Manizales" data-horario="Horario flexible">
+
+            <p class="fecha">hace 1 día</p>
+
+            <h3 class="titulo-empleo"><a href="#">Atención al cliente</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Manizales</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#CDBFD8; color:#4A2A66;">N</span>
+              <strong>Nexo Servicios</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.150.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Atención al cliente</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Atención virtual y telefónica que
+              se adapta a tus horarios de clase.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Administración" data-ciudad="Manizales" data-horario="Medio tiempo">
+
+            <p class="fecha">hace 2 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Asistente administrativo</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Manizales</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#E7A67B; color:#7F3807;">O</span>
+              <strong>Oficina Ágil</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.400.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Administración</span>
+              <span class="tag tag-horario">Medio tiempo</span>
+            </div>
+
+            <p class="descripcion">
+              Apoyo en tareas de oficina para
+              ganar tu primera experiencia laboral.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Servicios" data-ciudad="Cali" data-horario="Fines de semana">
+
+            <p class="fecha">hace 3 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Ayudante de cafetería</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Cali</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#A8D5BA; color:#2F6B45;">C</span>
+              <strong>Café de la Esquina</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.050.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Servicios</span>
+              <span class="tag tag-horario">Fines de semana</span>
+            </div>
+
+            <p class="descripcion">
+              Servicio en mesa y barra durante
+              sábados y domingos.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Servicios" data-ciudad="Bogotá" data-horario="Horario flexible">
+
+            <p class="fecha">hace 4 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Monitor de biblioteca</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#C9B8E8; color:#4B2E83;">B</span>
+              <strong>Biblioteca Central</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.200.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Servicios</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Apoyo en orden y préstamo de libros,
+              con turnos que se acomodan a tu horario.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Ventas" data-ciudad="Medellín" data-horario="Fines de semana">
+
+            <p class="fecha">hace 5 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Cajero de supermercado</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#FFD3B6; color:#A14A13;">S</span>
+              <strong>Supertienda Andina</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.350.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Ventas</span>
+              <span class="tag tag-horario">Fines de semana</span>
+            </div>
+
+            <p class="descripcion">
+              Manejo de caja y atención rápida,
+              fines de semana y festivos.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Educación" data-ciudad="Medellín" data-horario="Horario flexible">
+
+            <p class="fecha">hace 2 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Tutor de matemáticas</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#A9D7F5; color:#1D5F8C;">D</span>
+              <strong>Academia Descartes</strong>
+            </div>
+
+            <p class="salario"><strong>$ 45.000</strong><span>Por hora</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Educación</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Clases particulares a estudiantes
+              de colegio; tú eliges tus horarios.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Tecnología" data-ciudad="Pereira" data-horario="Tiempo completo">
+
+            <p class="fecha">hace 6 días <span class="badge-destacado">Destacado</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Community manager</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pereira</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#F2B8C6; color:#8C2F48;">P</span>
+              <strong>Agencia Pixel</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.800.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Tecnología</span>
+              <span class="tag tag-horario">Tiempo completo</span>
+            </div>
+
+            <p class="descripcion">
+              Manejo de redes sociales de una
+              pequeña empresa, con modalidad híbrida.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+
+          <article class="tarjeta empleo" data-tipo="Administración" data-ciudad="Ibagué" data-horario="Medio tiempo">
+
+            <p class="fecha">hace 7 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Recepcionista</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Ibagué</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#98D8D0; color:#1F6F63;">H</span>
+              <strong>Hotel Manizales Plaza</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.250.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Administración</span>
+              <span class="tag tag-horario">Medio tiempo</span>
+            </div>
+
+            <p class="descripcion">
+              Recibimiento de visitantes y atención
+              telefónica en horario de la mañana.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Ventas" data-ciudad="Cali" data-horario="Medio tiempo">
+
+            <p class="fecha">hace 8 días <span class="badge-nuevo">Nuevo</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Vendedor de mostrador</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Cali</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#FFE0B2; color:#8D5A00;">M</span>
+              <strong>Modas Caribe</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.280.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Ventas</span>
+              <span class="tag tag-horario">Medio tiempo</span>
+            </div>
+
+            <p class="descripcion">
+              Atención al cliente y venta de ropa
+              en tienda física, turnos rotativos.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Educación" data-ciudad="Bogotá" data-horario="Horario flexible">
+
+            <p class="fecha">hace 3 días <span class="badge-nuevo">Nuevo</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Tutor de inglés</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#B3E5FC; color:#01579B;">E</span>
+              <strong>English Academy</strong>
+            </div>
+
+            <p class="salario"><strong>$ 50.000</strong><span>Por hora</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Educación</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Clases de inglés conversacional para
+              niños y adolescentes en la tarde.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Servicios" data-ciudad="Medellín" data-horario="Fines de semana">
+
+            <p class="fecha">hace 9 días <span class="badge-nuevo">Nuevo</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Mesero</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#FFCCBC; color:#BF360C;">R</span>
+              <strong>Restaurante La Plaza</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.400.000</strong><span>Por mes + propinas</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Servicios</span>
+              <span class="tag tag-horario">Fines de semana</span>
+            </div>
+
+            <p class="descripcion">
+              Servicio en restaurante de comida
+              típica, experiencia previa no requerida.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Tecnología" data-ciudad="Bogotá" data-horario="Tiempo completo">
+
+            <p class="fecha">hace 10 días <span class="badge-destacado">Destacado</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Diseñador UI Jr.</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#E1BEE7; color:#6A1B9A;">S</span>
+              <strong>Studio Pixel</strong>
+            </div>
+
+            <p class="salario"><strong>$ 2.200.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Tecnología</span>
+              <span class="tag tag-horario">Tiempo completo</span>
+            </div>
+
+            <p class="descripcion">
+              Diseño de interfaces para apps móviles,
+              trabaja con equipo de desarrollo ágil.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Atención al cliente" data-ciudad="Manizales" data-horario="Medio tiempo">
+
+            <p class="fecha">hace 5 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Soporte técnico</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Manizales</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#C8E6C9; color:#2E7D32;">T</span>
+              <strong>Tech Help</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.200.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Atención al cliente</span>
+              <span class="tag tag-horario">Medio tiempo</span>
+            </div>
+
+            <p class="descripcion">
+              Atención telefónica a usuarios,
+              horario de lunes a sábado.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Administración" data-ciudad="Pereira" data-horario="Horario flexible">
+
+            <p class="fecha">hace 12 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Data entry</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pereira</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#D1C4E9; color:#4527A0;">L</span>
+              <strong>Logística Total</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.100.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Administración</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Ingreso de datos y actualización
+              de inventarios en hojas de cálculo.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Ventas" data-ciudad="Ibagué" data-horario="Tiempo completo">
+
+            <p class="fecha">hace 15 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Teleoperador</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Ibagué</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#FFF9C4; color:#F57F17;">C</span>
+              <strong>Contact Center Andino</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.500.000</strong><span>Por mes + comisiones</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Ventas</span>
+              <span class="tag tag-horario">Tiempo completo</span>
+            </div>
+
+            <p class="descripcion">
+              Ventas telefónicas y seguimiento
+              de clientes, capacitación incluida.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <!-- ============ OFERTAS DE PENSILVANIA, CALDAS ============
+               Se añaden SIEMPRE al final de la lista: el índice de cada
+               oferta (0, 1, 2...) depende del orden aquí y lo usa
+               js/ofertas.js para el detalle, el encaje y la afinidad. -->
+
+          <article class="tarjeta empleo" data-tipo="Ventas" data-ciudad="Pensilvania" data-horario="Horario flexible">
+
+            <p class="fecha">Hoy <span class="badge-nuevo">Nuevo</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Auxiliar de almacén</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pensilvania, Caldas</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#F6C982; color:#785113;">A</span>
+              <strong>Almacén El Progreso</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.320.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Ventas</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Atención al barrio en mostrador y
+              cuaderno de fiado, sin turno fijo.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Servicios" data-ciudad="Pensilvania" data-horario="Medio tiempo">
+
+            <p class="fecha">hace 1 día <span class="badge-nuevo">Nuevo</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Supervisor de finca cafetera</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pensilvania, Caldas</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#8FA86B; color:#37451F;">C</span>
+              <strong>Cooperativa Cafetera del Sur</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.450.000</strong><span>Por mes + bonificación</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Servicios</span>
+              <span class="tag tag-horario">Medio tiempo</span>
+            </div>
+
+            <p class="descripcion">
+              Acompanar la recolección, llevar el registro
+              de lotes y revisar el calidad en finca.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Ventas" data-ciudad="Pensilvania" data-horario="Fines de semana">
+
+            <p class="fecha">hace 2 días <span class="badge-nuevo">Nuevo</span></p>
+
+            <h3 class="titulo-empleo"><a href="#">Auxiliar de fruvería</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pensilvania, Caldas</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#A8D5BA; color:#2F6B45;">F</span>
+              <strong>Fruvería La Plaza</strong>
+            </div>
+
+            <p class="salario"><strong>$ 32.000</strong><span>Por día</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Ventas</span>
+              <span class="tag tag-horario">Fines de semana</span>
+            </div>
+
+            <p class="descripcion">
+              Cargar y organizar la fruta del mercado.
+              Ideal si buscas algo solo el fin de semana.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Administración" data-ciudad="Pensilvania" data-horario="Horario flexible">
+
+            <p class="fecha">hace 4 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Auxiliar administrativo</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pensilvania, Caldas</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#CDBFD8; color:#4A2A66;">J</span>
+              <strong>Junta Municipal</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.380.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Administración</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Radicar oficios, agendar citas y llevar
+              el archivo de la entidad. Horario a convenir.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+          <article class="tarjeta empleo" data-tipo="Servicios" data-ciudad="Pensilvania" data-horario="Fines de semana">
+
+            <p class="fecha">hace 6 días</p>
+
+            <h3 class="titulo-empleo"><a href="#">Guía de ruta del café</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pensilvania, Caldas</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#C9B8E8; color:#4B2E83;">R</span>
+              <strong>Turismo del Magdalena</strong>
+            </div>
+
+            <p class="salario"><strong>$ 35.000</strong><span>Por día</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Servicios</span>
+              <span class="tag tag-horario">Fines de semana</span>
+            </div>
+
+            <p class="descripcion">
+              Acompañar visitantes en la ruta del café
+              y contarles cómo se produce y se cosecha.
+            </p>
+
+            <a class="inscribirme" href="mi-perfil.html">Inscribirme</a>
+
+          </article>
+
+        </div>
+
+        <button type="button" class="boton boton-ghost cargar-mas" id="cargar-mas" hidden>
+          Cargar más ofertas
+        </button>
+
+        <p class="sin-resultados" id="sin-resultados" hidden>
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          No encontramos ofertas con esos filtros.
+          Prueba a cambiar la búsqueda.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer class="pie-pagina">
+
+    <div class="contenedor">
+
+      <div class="pie-contenido">
+
+        <div class="pie-marca">
+
+          <p class="pie-titulo"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</p>
+
+          <p>
+            Empleos flexibles para estudiantes
+            que quieren estudiar y trabajar.
+          </p>
+
+        </div>
+
+        <div class="pie-columna">
+
+          <p class="pie-titulo">Páginas</p>
+
+          <a href="index.html">Inicio</a>
+          <a href="buscar-empleos.html">Buscar empleos</a>
+          <a href="mi-perfil.html">Mi perfil</a>
+
+        </div>
+
+        <div class="pie-columna">
+
+          <p class="pie-titulo">Contacto</p>
+
+          <a href="mailto:hola@estutrabajo.co">hola@estutrabajo.co</a>
+          <a href="#">@estutrabajo</a>
+
+        </div>
+
+      </div>
+
+      <p class="pie-copy">
+        © 2026 EstuTrabajo · Diseño de interfaces web
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <!-- Modal de detalle de oferta -->
+  <div class="modal" id="modal-oferta" hidden>
+    <div class="modal-velo" data-cerrar-modal></div>
+
+    <div
+      class="modal-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-titulo"
+    >
+
+      <header class="modal-cabecera">
+        <div class="modal-empresa">
+          <span class="avatar" id="modal-avatar" aria-hidden="true"></span>
+          <div>
+            <p class="modal-meta" id="modal-ciudad"></p>
+            <h2 class="modal-titulo" id="modal-titulo"></h2>
+            <p class="modal-compania" id="modal-compania"></p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="modal-cerrar"
+          id="modal-cerrar"
+          aria-label="Cerrar detalle de la oferta"
+        >
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="modal-imagen">
+        <img id="modal-imagen-foto" src="" alt="">
+      </div>
+
+      <div class="modal-cuerpo">
+        <p class="modal-salario">
+          <strong id="modal-salario"></strong>
+          <span id="modal-periodo"></span>
+        </p>
+
+        <div class="etiquetas-trabajo">
+          <span class="tag tag-tipo" id="modal-tipo"></span>
+          <span class="tag tag-horario" id="modal-horario"></span>
+        </div>
+
+        <section class="modal-bloque">
+          <h3>Sobre el puesto</h3>
+          <p id="modal-descripcion"></p>
+        </section>
+
+        <section class="modal-bloque">
+          <h3>Qué harás</h3>
+          <ul class="modal-lista" id="modal-tareas"></ul>
+        </section>
+
+        <section class="modal-bloque">
+          <h3>Requisitos</h3>
+          <ul class="modal-lista" id="modal-requisitos"></ul>
+        </section>
+
+        <section class="modal-bloque">
+          <h3>Publicada</h3>
+          <p class="modal-fecha" id="modal-publicada"></p>
+        </section>
+      </div>
+
+      <footer class="modal-pie modal-pie-tres">
+        <button type="button" class="boton boton-ghost" id="modal-ver-sueldo">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> Sueldo
+        </button>
+        <button type="button" class="boton boton-ghost" id="modal-ver-carta">
+          <i class="fa-solid fa-file-signature" aria-hidden="true"></i> Carta
+        </button>
+        <button type="button" class="boton" id="modal-postular">
+          Postularme
+        </button>
+      </footer>
+
+    </div>
+  </div>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite" hidden></div>
+
+
+  <!-- Modal: simulador de sueldo -->
+  <div class="modal" id="modal-sueldo" hidden>
+    <div class="modal-velo" data-cerrar-sueldo></div>
+
+    <div class="modal-panel modal-panel-angosta" role="dialog" aria-modal="true" aria-labelledby="sueldo-titulo">
+
+      <header class="modal-cabecera">
+        <div>
+          <p class="modal-meta">Herramienta</p>
+          <h2 class="modal-titulo" id="sueldo-titulo">¿Cuánto te queda de verdad?</h2>
+        </div>
+        <button type="button" class="modal-cerrar" id="sueldo-cerrar" aria-label="Cerrar">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="modal-cuerpo">
+        <p class="sueldo-contexto" id="sueldo-contexto" hidden></p>
+
+        <div class="sueldo-entrada-campos">
+          <div class="campo">
+            <label for="sueldo-bruto">Sueldo</label>
+            <input type="number" id="sueldo-bruto" min="0" step="10000" value="1300000">
+          </div>
+          <div class="campo">
+            <label for="sueldo-periodo">Periodo</label>
+            <select id="sueldo-periodo">
+              <option value="mes">Al mes</option>
+              <option value="hora">Por hora</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sueldo-resultado" id="sueldo-resultado"></div>
+
+        <p class="sueldo-descargo">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          Esto es una <strong>estimación</strong> con fines educativos. El sueldo real
+          depende de tu situación fiscal, cargas familiares y antigüedad.
+          Para el dato oficial, consulta con tu empleador o con la DIAN.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Modal: generador de carta -->
+  <div class="modal" id="modal-carta" hidden>
+    <div class="modal-velo" data-cerrar-carta></div>
+
+    <div class="modal-panel modal-panel-ancha" role="dialog" aria-modal="true" aria-labelledby="carta-titulo">
+
+      <header class="modal-cabecera">
+        <div>
+          <p class="modal-meta">Herramienta</p>
+          <h2 class="modal-titulo" id="carta-titulo">Tu carta de presentación</h2>
+        </div>
+        <button type="button" class="modal-cerrar" data-cerrar-carta aria-label="Cerrar">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="modal-cuerpo">
+        <p class="carta-contexto" id="carta-contexto" hidden></p>
+
+        <div class="campo">
+          <label for="carta-oferta">Para esta oferta</label>
+          <select id="carta-oferta"></select>
+        </div>
+
+        <div class="campo">
+          <label for="carta-texto">Carta (puedes editarla antes de copiar)</label>
+          <textarea id="carta-texto" rows="16" spellcheck="true"></textarea>
+        </div>
+
+        <p class="carta-aviso" id="carta-aviso" role="status" aria-live="polite" hidden></p>
+      </div>
+
+      <footer class="modal-pie">
+        <button type="button" class="boton boton-ghost" id="carta-limpiar">
+          Regenerar
+        </button>
+        <button type="button" class="boton" id="carta-copiar">
+          <i class="fa-regular fa-copy" aria-hidden="true"></i> Copiar
+        </button>
+      </footer>
+
+    </div>
+  </div>
+
+
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/postular.js"></script>
+  <script src="js/ofertas.js"></script>
+  <script src="js/empleo.js"></script>
+  <script src="js/empleos.js"></script>
+  <script src="js/encaje.js"></script>
+  <script src="js/sueldo.js"></script>
+  <script src="js/carta.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/theme.js"></script>
+
+</body>
+
+</html>

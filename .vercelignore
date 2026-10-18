@@ -1,0 +1,13 @@
+# Archivos que NO deben subirse al sitio publico.
+# Vercel respeta este archivo igual que .gitignore: lo listado aqui
+# se ignora al desplegar, pero sigue existiendo en tu computador.
+
+# Documentacion interna del trabajo academico
+DESIGN.md
+HOJA-DE-CONTEXTO.md
+COMO-CONECTAR-LA-BASE-DE-DATOS.md
+Ficha_Definicion_Proyecto.docx
+
+# Paginas de muestra de diseno (solo sirven para trabajar en clase)
+muestrario.html
+muestrario-colores.html

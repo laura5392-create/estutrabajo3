@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" width="800" height="500">
+  <title>Ilustración de un puesto administrativo</title>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F4F5FF"/>
+      <stop offset="1" stop-color="#E4E6FD"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#fondo)"/>
+
+  <circle cx="110" cy="100" r="48" fill="#6366F1" opacity=".10"/>
+  <circle cx="690" cy="390" r="56" fill="#F59E0B" opacity=".12"/>
+  <circle cx="660" cy="100" r="24" fill="#6366F1" opacity=".10"/>
+
+  <!-- Carpeta -->
+  <g transform="translate(96 190)">
+    <path d="M0 26a12 12 0 0 1 12-12h46l16 18h78a12 12 0 0 1 12 12v92a12 12 0 0 1-12 12H12a12 12 0 0 1-12-12z" fill="#F59E0B"/>
+    <path d="M0 26a12 12 0 0 1 12-12h46l16 18h78a12 12 0 0 1 12 12v14H0z" fill="#D97706"/>
+    <rect x="26" y="76" width="112" height="11" rx="5" fill="#FFFFFF" opacity=".75"/>
+    <rect x="26" y="100" width="76" height="11" rx="5" fill="#FFFFFF" opacity=".55"/>
+  </g>
+
+  <!-- Hojas apiladas -->
+  <g transform="translate(262 176) rotate(-4)">
+    <rect x="26" y="30" width="220" height="272" rx="12" fill="#FFFFFF" stroke="#C7CBF5" stroke-width="3"/>
+    <rect x="0" y="14" width="220" height="272" rx="12" fill="#FFFFFF" stroke="#6366F1" stroke-width="3"/>
+    <g fill="#6366F1">
+      <rect x="26" y="46" width="128" height="12" rx="6" opacity=".55"/>
+      <rect x="26" y="76" width="168" height="8" rx="4" opacity=".22"/>
+      <rect x="26" y="96" width="150" height="8" rx="4" opacity=".22"/>
+      <rect x="26" y="116" width="162" height="8" rx="4" opacity=".22"/>
+    </g>
+    <rect x="26" y="150" width="92" height="26" rx="8" fill="#EEF0FE"/>
+    <rect x="38" y="158" width="40" height="10" rx="5" fill="#6366F1" opacity=".55"/>
+    <g fill="#6366F1" opacity=".22">
+      <rect x="26" y="196" width="168" height="8" rx="4"/>
+      <rect x="26" y="216" width="140" height="8" rx="4"/>
+    </g>
+    <!-- Casillas de verificación -->
+    <g>
+      <rect x="26" y="244" width="20" height="20" rx="6" fill="#6366F1"/>
+      <path d="M31 254l4 4 7-8" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="56" y="249" width="104" height="10" rx="5" fill="#6366F1" opacity=".22"/>
+    </g>
+  </g>
+
+  <!-- Portatil -->
+  <g transform="translate(536 236)">
+    <rect width="200" height="132" rx="12" fill="#1F2937"/>
+    <rect x="14" y="14" width="172" height="104" rx="7" fill="#EEF0FE"/>
+    <g fill="#6366F1" opacity=".38">
+      <rect x="32" y="34" width="88" height="10" rx="5"/>
+      <rect x="32" y="54" width="120" height="8" rx="4" opacity=".6"/>
+      <rect x="32" y="72" width="76" height="8" rx="4" opacity=".6"/>
+      <rect x="32" y="90" width="104" height="8" rx="4" opacity=".6"/>
+    </g>
+    <rect x="-16" y="132" width="232" height="16" rx="8" fill="#1F2937"/>
+    <rect x="80" y="136" width="40" height="6" rx="3" fill="#4B5563"/>
+  </g>
+
+  <!-- Mesa -->
+  <rect x="70" y="452" width="660" height="20" rx="10" fill="#4F46E5"/>
+  <rect x="104" y="472" width="20" height="28" rx="6" fill="#4338CA"/>
+  <rect x="676" y="472" width="20" height="28" rx="6" fill="#4338CA"/>
+
+  <!-- Gráficas / informe -->
+  <g transform="translate(470 118)">
+    <rect width="118" height="86" rx="12" fill="#FFFFFF" stroke="#C7CBF5" stroke-width="3"/>
+    <rect x="20" y="52" width="16" height="18" rx="4" fill="#6366F1" opacity=".55"/>
+    <rect x="46" y="38" width="16" height="32" rx="4" fill="#6366F1" opacity=".75"/>
+    <rect x="72" y="24" width="16" height="46" rx="4" fill="#4F46E5"/>
+  </g>
+</svg>

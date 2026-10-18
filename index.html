@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Aplica el tema guardado ANTES de pintar la pagina (evita el destello blanco).
+       Debe quedar aqui: antes de cualquier <link> de estilos. theme.js lo confirma despues. -->
+  <script>
+    (function () {
+      try {
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+      } catch (e) { /* localStorage bloqueado: se queda en claro */ }
+    })();
+  </script>
+
+  <title>EstuTrabajo — Empleos flexibles para estudiantes</title>
+
+  <meta name="description" content="EstuTrabajo reúne ofertas de empleo flexibles para estudiantes: busca, filtra por tipo de trabajo y crea tu perfil en minutos.">
+  <meta name="theme-color" content="#C6F24E">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="EstuTrabajo — Empleos flexibles para estudiantes">
+  <meta property="og:description" content="Encuentra ofertas de empleo con horarios flexibles pensadas para estudiantes.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CO">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23C6F24E'/%3E%3Cpath fill='%2317110C' d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="CSS/estilos.css">
+</head>
+
+<body data-total-ofertas="21">
+  <a href="#contenido" class="skip-link">Saltar al contenido principal</a>
+
+  <noscript>
+    <p class="sin-noscript">
+      Este sitio funciona mejor con JavaScript activado. Sin él, los filtros de búsqueda
+      y la vista previa del perfil no estarán disponibles.
+    </p>
+  </noscript>
+
+  <header class="encabezado">
+
+    <div class="contenedor barra-superior">
+
+      <a class="marca" href="index.html"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</a>
+
+      <nav class="menu" aria-label="Menú principal" id="menu-principal">
+        <a class="activo" href="index.html" aria-current="page">Inicio</a>
+        <a href="buscar-empleos.html">Buscar empleos</a>
+        <a href="mi-perfil.html">Mi perfil</a>
+      </nav>
+
+      <a class="boton" href="buscar-empleos.html">Ver ofertas</a>
+
+    </div>
+
+    <!-- Búsqueda principal, estilo portal de empleo -->
+    <div class="busqueda-principal">
+      <div class="contenedor">
+        <form action="buscar-empleos.html" method="get" role="search">
+
+          <label class="campo-busqueda" for="que-buscar">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input
+              type="search"
+              id="que-buscar"
+              name="busqueda"
+              placeholder="Qué: tienda, tutoría..."
+              autocomplete="off"
+            >
+          </label>
+
+          <label class="campo-busqueda" for="donde-buscar">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <select id="donde-buscar" name="ciudad">
+              <option value="">Dónde: todas las ciudades</option>
+              <option value="Bogotá">Bogotá</option>
+              <option value="Medellín">Medellín</option>
+              <option value="Manizales">Manizales</option>
+                <option value="Pensilvania">Pensilvania, Caldas</option>
+              <option value="Cali">Cali</option>
+              <option value="Pereira">Pereira</option>
+              <option value="Ibagué">Ibagué</option>
+            </select>
+          </label>
+
+          <button type="submit" class="boton">Buscar Empleo</button>
+
+        </form>
+      </div>
+    </div>
+
+  </header>
+
+
+  <main id="contenido">
+
+    <!-- Héroe: foto a la izquierda, texto a la derecha -->
+    <section class="hero contenedor">
+
+      <div class="hero-visual">
+
+        <div class="tarjeta-imagen">
+          <img
+            src="img/adolecentebuscandotrabajo.webp"
+            alt="Estudiante buscando oportunidades de trabajo"
+            width="1280"
+            height="853"
+            decoding="async"
+            fetchpriority="high"
+          >
+        </div>
+
+        <span class="chip chip-sol"><i class="fa-solid fa-clock" aria-hidden="true"></i> Horario flexible</span>
+        <span class="chip chip-rosa"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Medio tiempo</span>
+
+      </div>
+
+      <div class="hero-texto">
+
+        <p class="etiqueta hero-tag"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Empleos diseñados para estudiantes</p>
+
+        <h1>
+          Estudia y trabaja <span class="resaltado">sin renunciar</span> a lo que te gusta
+        </h1>
+
+        <p>
+          Encuentra ofertas de empleo con horarios flexibles,
+          pensadas para que puedas seguir estudiando mientras ganas experiencia.
+        </p>
+
+        <p class="hero-ctas">
+          <a class="boton" href="buscar-empleos.html">Buscar empleos</a>
+          <a class="boton boton-ghost" href="#como-funciona">¿Cómo funciona?</a>
+        </p>
+
+        <p class="hero-nota">
+          <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+          <span data-texto-ofertas>16+ ofertas flexibles</span> · 6 ciudades · 100% gratis
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- Ofertas destacadas -->
+    <section class="seccion" id="ofertas">
+
+      <div class="contenedor">
+
+        <header class="seccion-encabezado">
+
+          <p class="etiqueta">Empleos para estudiantes</p>
+
+          <h2>Ofertas destacadas</h2>
+
+          <p>
+            Un vistazo a los empleos que más les gustan
+            a los estudiantes.
+          </p>
+
+        </header>
+
+        <div class="tarjetas">
+
+          <article class="tarjeta empleo">
+
+            <p class="fecha">Hoy</p>
+
+            <h3 class="titulo-empleo"><a href="buscar-empleos.html">Auxiliar de tienda</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#F6C982; color:#785113;">A</span>
+              <strong>Almacenes El Sol</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.300.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Ventas</span>
+              <span class="tag tag-horario">Medio tiempo</span>
+            </div>
+
+            <p class="descripcion">
+              Atención a clientes en tienda de ropa,
+              ideal para tardes entre semana.
+            </p>
+
+            <a class="inscribirme" href="buscar-empleos.html">Ver oferta</a>
+
+          </article>
+
+          <article class="tarjeta empleo">
+
+            <p class="fecha">hace 2 días</p>
+
+            <h3 class="titulo-empleo"><a href="buscar-empleos.html">Tutor de matemáticas</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Medellín</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#A9D7F5; color:#1D5F8C;">D</span>
+              <strong>Academia Descartes</strong>
+            </div>
+
+            <p class="salario"><strong>$ 45.000</strong><span>Por hora</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Educación</span>
+              <span class="tag tag-horario">Horario flexible</span>
+            </div>
+
+            <p class="descripcion">
+              Clases particulares a estudiantes
+              de colegio; tú eliges tus horarios.
+            </p>
+
+            <a class="inscribirme" href="buscar-empleos.html">Ver oferta</a>
+
+          </article>
+
+          <article class="tarjeta empleo">
+
+            <p class="fecha">hace 6 días</p>
+
+            <h3 class="titulo-empleo"><a href="buscar-empleos.html">Community manager</a></h3>
+
+            <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Pereira</p>
+
+            <div class="empresa">
+              <span class="avatar" style="background:#F2B8C6; color:#8C2F48;">P</span>
+              <strong>Agencia Pixel</strong>
+            </div>
+
+            <p class="salario"><strong>$ 1.800.000</strong><span>Por mes</span></p>
+
+            <div class="etiquetas-trabajo">
+              <span class="tag tag-tipo">Tecnología</span>
+              <span class="tag tag-horario">Tiempo completo</span>
+            </div>
+
+            <p class="descripcion">
+              Manejo de redes sociales de una
+              pequeña empresa, con modalidad híbrida.
+            </p>
+
+            <a class="inscribirme" href="buscar-empleos.html">Ver oferta</a>
+
+          </article>
+
+        </div>
+
+        <p style="text-align:center; margin: 28px 0 0;">
+          <a class="enlace" href="buscar-empleos.html">Ver todas las ofertas</a>
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- Estadísticas -->
+    <section class="stats contenedor" aria-label="Cifras de EstuTrabajo">
+
+      <div class="stat">
+        <b data-contador-ofertas>16+</b>
+        <span>Ofertas flexibles</span>
+      </div>
+
+      <div class="stat">
+        <b>6</b>
+        <span>Ciudades de Colombia</span>
+      </div>
+
+      <div class="stat">
+        <b>6</b>
+        <span>Tipos de trabajo</span>
+      </div>
+
+      <div class="stat">
+        <b>100%</b>
+        <span>Gratis para estudiantes</span>
+      </div>
+
+    </section>
+
+
+    <!-- Búsquedas frecuentes -->
+    <section class="seccion" style="padding-top:0;">
+
+      <div class="contenedor">
+
+        <header class="seccion-encabezado">
+          <p class="etiqueta">Búsquedas rápidas</p>
+          <h2 style="margin-bottom:0;">Búsquedas frecuentes</h2>
+        </header>
+
+        <div class="frecuentes">
+
+          <a class="frecuente" href="buscar-empleos.html?tipo=Ventas">
+            <b>Ventas</b>
+            <span>2 trabajos</span>
+          </a>
+
+          <a class="frecuente" href="buscar-empleos.html?tipo=Servicios">
+            <b>Servicios</b>
+            <span>2 trabajos</span>
+          </a>
+
+          <a class="frecuente" href="buscar-empleos.html?tipo=Administración">
+            <b>Administración</b>
+            <span>2 trabajos</span>
+          </a>
+
+          <a class="frecuente" href="buscar-empleos.html?tipo=Educación">
+            <b>Educación</b>
+            <span>2 trabajos</span>
+          </a>
+
+          <a class="frecuente" href="buscar-empleos.html?tipo=Atención al cliente">
+            <b>Atención al cliente</b>
+            <span>2 trabajos</span>
+          </a>
+
+          <a class="frecuente" href="buscar-empleos.html?tipo=Tecnología">
+            <b>Tecnología</b>
+            <span>2 trabajos</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Cómo funciona -->
+    <section class="seccion seccion-alt" id="como-funciona">
+
+      <div class="contenedor">
+
+        <header class="seccion-encabezado">
+
+          <p class="etiqueta">Así de fácil</p>
+
+          <h2>¿Cómo funciona?</h2>
+
+          <p>
+            En tres pasos pasas de no tener empleo
+            a encontrar la oportunidad perfecta para tu horario.
+          </p>
+
+        </header>
+
+        <div class="tarjetas">
+
+          <article class="tarjeta paso">
+
+            <span class="numero">1</span>
+
+            <h3>Crea tu perfil</h3>
+
+            <p>
+              Cuéntanos sobre ti: tus estudios,
+              habilidades y disponibilidad.
+            </p>
+
+          </article>
+
+          <article class="tarjeta paso">
+
+            <span class="numero">2</span>
+
+            <h3>Explora las ofertas</h3>
+
+            <p>
+              Filtra por tipo de trabajo, ciudad y horario
+              hasta encontrar la ideal.
+            </p>
+
+          </article>
+
+          <article class="tarjeta paso">
+
+            <span class="numero">3</span>
+
+            <h3>Postúlate</h3>
+
+            <p>
+              Aplica con tus datos y consigue
+              un empleo que se adapte a tus clases.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Banda CTA -->
+    <section class="contenedor">
+
+      <div class="cta-band">
+
+        <div>
+
+          <h2>¿Listo para encontrar tu empleo?</h2>
+
+          <p>
+            Crea tu perfil y deja que las mejores
+            ofertas lleguen a ti.
+          </p>
+
+        </div>
+
+        <a class="boton" href="mi-perfil.html">Crear mi perfil</a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer class="pie-pagina">
+
+    <div class="contenedor">
+
+      <div class="pie-contenido">
+
+        <div class="pie-marca">
+
+          <p class="pie-titulo"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</p>
+
+          <p>
+            Empleos flexibles para estudiantes
+            que quieren estudiar y trabajar.
+          </p>
+
+        </div>
+
+        <div class="pie-columna">
+
+          <p class="pie-titulo">Páginas</p>
+
+          <a href="index.html">Inicio</a>
+          <a href="buscar-empleos.html">Buscar empleos</a>
+          <a href="mi-perfil.html">Mi perfil</a>
+
+        </div>
+
+        <div class="pie-columna">
+
+          <p class="pie-titulo">Contacto</p>
+
+          <a href="mailto:hola@estutrabajo.co">hola@estutrabajo.co</a>
+          <a href="#">@estutrabajo</a>
+
+        </div>
+
+      </div>
+
+      <p class="pie-copy">
+        © 2026 EstuTrabajo · Diseño de interfaces web
+      </p>
+
+    </div>
+
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/ofertas.js"></script>
+  <script src="js/empleo.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/theme.js"></script>
+</body>
+
+</html>

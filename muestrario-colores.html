@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Muestrario de colores — EstuTrabajo Pop</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EDEDF2; font-family: 'Inter', system-ui, sans-serif; }
+
+    .intro { max-width: 1080px; margin: 0 auto; padding: 34px 20px 6px; text-align: center; }
+    .intro h1 { font-size: 24px; margin: 0 0 8px; }
+    .intro p { color: #5A5A66; font-size: 14px; margin: 0; }
+    .elegido { display: none; }
+
+    /* Base del Pop */
+    .pop {
+      max-width: 1080px;
+      margin: 22px auto;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #FFFDF5;
+      border: 2px solid #17110C;
+      transition: outline .15s ease;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #17110C;
+      --ink: #17110C;
+      --muted: #6B6158;
+    }
+    .pop.seleccionado { outline: 5px solid #17110C; }
+
+    .opc-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; border-bottom: 1.5px solid #17110C; }
+    .opc-bar b { font-family: 'Baloo 2', sans-serif; font-size: 16px; }
+    .elegir { border: 2px solid #17110C; background: #fff; color: #17110C; font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 13px; padding: 7px 16px; border-radius: 999px; box-shadow: 2px 2px 0 #17110C; cursor: pointer; }
+    .elegir:hover { background: var(--acc); }
+
+    /* Barra */
+    .p-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 22px; border-bottom: 2px solid #17110C; }
+    .p-logo { font-family: 'Baloo 2', sans-serif; font-size: 18px; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; }
+    .p-logo i { color: var(--acc); font-size: 19px; text-shadow: 1.5px 1.5px 0 #17110C; }
+    .p-nav { display: flex; gap: 16px; font-size: 13px; font-weight: 600; }
+    .p-nav a.on { background: var(--acc); border: 2px solid #17110C; border-radius: 999px; padding: 5px 12px; box-shadow: 2px 2px 0 #17110C; }
+    .p-cta { border: 2px solid #17110C; border-radius: 999px; background: var(--acc); color: #17110C; font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 13px; padding: 8px 18px; box-shadow: 2px 2px 0 #17110C; cursor: pointer; }
+
+    /* Héroe */
+    .p-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 26px; align-items: center; padding: 32px 30px 34px; }
+    .p-tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 999px; background: var(--acc); border: 2px solid #17110C; box-shadow: 2px 2px 0 #17110C; color: #17110C; margin-bottom: 12px; }
+    .p-txto h2 { font-family: 'Baloo 2', sans-serif; font-size: clamp(1.5rem, 2.4vw, 2rem); font-weight: 800; line-height: 1.15; margin: 0 0 10px; color: #17110C; }
+    .p-txto h2 em { font-style: normal; background: linear-gradient(transparent 62%, color-mix(in srgb, var(--acc) 90%, transparent) 62%); padding: 0 2px; }
+    .p-txto p { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+    .p-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .p-btn { border: 2px solid #17110C; border-radius: 999px; background: var(--acc); color: #17110C; font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 13px; padding: 10px 20px; box-shadow: 3px 3px 0 #17110C; cursor: pointer; }
+    .p-btn.ghost { background: #fff; }
+
+    .p-card { background: #fff; border: 2px solid #17110C; border-radius: 18px; box-shadow: 4px 4px 0 #17110C; padding: 16px 18px; }
+    .p-card small { display: block; text-align: right; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+    .p-card h3 { font-family: 'Baloo 2', sans-serif; font-size: 17px; margin: 0 0 4px; }
+    .p-meta { font-size: 12px; color: var(--muted); margin: 0 0 8px; display: flex; align-items: center; gap: 5px; }
+    .p-meta i { color: var(--acc2); }
+    .p-sueldo { font-family: 'Baloo 2', sans-serif; font-size: 17px; font-weight: 800; margin: 0 0 10px; }
+    .p-sueldo span { font-size: 11px; color: var(--muted); font-weight: 600; font-family: 'Inter', sans-serif; }
+    .p-tags { display: flex; gap: 6px; margin-bottom: 12px; }
+    .pt { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+    .pt-negro { background: #17110C; color: var(--acc); border: 1.5px solid #17110C; }
+    .pt-blanco { background: #fff; color: #17110C; border: 1.5px solid #17110C; }
+    .p-mini { border: 2px solid #17110C; border-radius: 999px; background: var(--acc); color: #17110C; font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 12px; padding: 8px 18px; box-shadow: 3px 3px 0 #17110C; cursor: pointer; }
+
+    /* Pie paleta */
+    .p-pie { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 22px; flex-wrap: wrap; border-top: 1.5px solid #17110C; }
+    .p-pie .swatches { display: flex; gap: 8px; }
+    .p-pie .sw { width: 30px; height: 30px; border-radius: 9px; border: 1.5px solid #17110C; }
+    .p-pie .nota { font-size: 12px; color: var(--muted); }
+
+    /* Paletas */
+    .v1 { --acc: #FFD23F; --hi: #FFDE66; --acc2: #FF2E63; }
+    .v2 { --acc: #C6F24E; --hi: #D8F87F; --acc2: #FF4D8D; }
+    .v3 { --acc: #FF8A00; --hi: #FFA43D; --acc2: #2D6BFF; }
+    .v4 { --acc: #19C6FF; --hi: #5BDBFF; --acc2: #7C3AED; }
+
+    @media (max-width: 760px) {
+      .p-hero { grid-template-columns: 1fr; padding: 24px 20px; }
+      .p-nav { order: 3; width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="intro">
+    <h1>Muestrario de colores — estilo Pop</h1>
+    <p>El mismo estilo Pop (bordes negros, sombras sticker, Baloo 2) con 4 combinaciones de color. Elige la que más te guste.</p>
+    <p class="elegido" id="elegido"><strong>Elegiste:</strong> <span id="elegido-nombre"></span> — dímelo y aplico esa paleta al sitio.</p>
+  </div>
+
+
+  <!-- V1 · Actual -->
+  <section class="pop v1" id="v1">
+    <div class="opc-bar">
+      <b>V1 · Actual (amarillo + rosa)</b>
+      <button class="elegir">Elegir esta</button>
+    </div>
+    <div class="p-bar">
+      <span class="p-logo"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</span>
+      <nav class="p-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="p-cta">Ver ofertas</button>
+    </div>
+    <div class="p-hero">
+      <div class="p-txto">
+        <span class="p-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h2>Estudia y trabaja <em>sin renunciar</em> a nada</h2>
+        <p>Ofertas flexibles para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="p-btns">
+          <button class="p-btn">Buscar empleos</button>
+          <button class="p-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <article class="p-card">
+        <small>Hoy</small>
+        <h3>Auxiliar de tienda</h3>
+        <p class="p-meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+        <p class="p-sueldo">$ 1.300.000 <span>por mes</span></p>
+        <div class="p-tags"><span class="pt pt-negro">Ventas</span><span class="pt pt-blanco">Medio tiempo</span></div>
+        <button class="p-mini">Inscribirme</button>
+      </article>
+    </div>
+    <div class="p-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#FFFDF5"></span>
+        <span class="sw" style="background:#FFD23F"></span>
+        <span class="sw" style="background:#FF2E63"></span>
+        <span class="sw" style="background:#17110C"></span>
+      </div>
+      <span class="nota">Amarillo #FFD23F · Rosa #FF2E63 · Negro</span>
+    </div>
+  </section>
+
+
+  <!-- V2 · Lima Pop -->
+  <section class="pop v2" id="v2">
+    <div class="opc-bar">
+      <b>V2 · Lima Pop (lima + frambuesa)</b>
+      <button class="elegir">Elegir esta</button>
+    </div>
+    <div class="p-bar">
+      <span class="p-logo"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</span>
+      <nav class="p-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="p-cta">Ver ofertas</button>
+    </div>
+    <div class="p-hero">
+      <div class="p-txto">
+        <span class="p-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h2>Estudia y trabaja <em>sin renunciar</em> a nada</h2>
+        <p>Ofertas flexibles para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="p-btns">
+          <button class="p-btn">Buscar empleos</button>
+          <button class="p-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <article class="p-card">
+        <small>Hoy</small>
+        <h3>Auxiliar de tienda</h3>
+        <p class="p-meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+        <p class="p-sueldo">$ 1.300.000 <span>por mes</span></p>
+        <div class="p-tags"><span class="pt pt-negro">Ventas</span><span class="pt pt-blanco">Medio tiempo</span></div>
+        <button class="p-mini">Inscribirme</button>
+      </article>
+    </div>
+    <div class="p-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#FFFDF5"></span>
+        <span class="sw" style="background:#C6F24E"></span>
+        <span class="sw" style="background:#FF4D8D"></span>
+        <span class="sw" style="background:#17110C"></span>
+      </div>
+      <span class="nota">Lima #C6F24E · Frambuesa #FF4D8D · Negro</span>
+    </div>
+  </section>
+
+
+  <!-- V3 · Naranja Eléctrico -->
+  <section class="pop v3" id="v3">
+    <div class="opc-bar">
+      <b>V3 · Naranja Eléctrico (naranja + azul)</b>
+      <button class="elegir">Elegir esta</button>
+    </div>
+    <div class="p-bar">
+      <span class="p-logo"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</span>
+      <nav class="p-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="p-cta">Ver ofertas</button>
+    </div>
+    <div class="p-hero">
+      <div class="p-txto">
+        <span class="p-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h2>Estudia y trabaja <em>sin renunciar</em> a nada</h2>
+        <p>Ofertas flexibles para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="p-btns">
+          <button class="p-btn">Buscar empleos</button>
+          <button class="p-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <article class="p-card">
+        <small>Hoy</small>
+        <h3>Auxiliar de tienda</h3>
+        <p class="p-meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+        <p class="p-sueldo">$ 1.300.000 <span>por mes</span></p>
+        <div class="p-tags"><span class="pt pt-negro">Ventas</span><span class="pt pt-blanco">Medio tiempo</span></div>
+        <button class="p-mini">Inscribirme</button>
+      </article>
+    </div>
+    <div class="p-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#FFFDF5"></span>
+        <span class="sw" style="background:#FF8A00"></span>
+        <span class="sw" style="background:#2D6BFF"></span>
+        <span class="sw" style="background:#17110C"></span>
+      </div>
+      <span class="nota">Naranja #FF8A00 · Azul #2D6BFF · Negro</span>
+    </div>
+  </section>
+
+
+  <!-- V4 · Cian Morado -->
+  <section class="pop v4" id="v4">
+    <div class="opc-bar">
+      <b>V4 · Cian Morado (cian + uva)</b>
+      <button class="elegir">Elegir esta</button>
+    </div>
+    <div class="p-bar">
+      <span class="p-logo"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</span>
+      <nav class="p-nav"><a class="on">Inicio</a><a>Buscar empleos</a><a>Mi perfil</a></nav>
+      <button class="p-cta">Ver ofertas</button>
+    </div>
+    <div class="p-hero">
+      <div class="p-txto">
+        <span class="p-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Empleos para estudiantes</span>
+        <h2>Estudia y trabaja <em>sin renunciar</em> a nada</h2>
+        <p>Ofertas flexibles para que sigas estudiando mientras ganas experiencia.</p>
+        <div class="p-btns">
+          <button class="p-btn">Buscar empleos</button>
+          <button class="p-btn ghost">¿Cómo funciona?</button>
+        </div>
+      </div>
+      <article class="p-card">
+        <small>Hoy</small>
+        <h3>Auxiliar de tienda</h3>
+        <p class="p-meta"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Bogotá · Almacenes El Sol</p>
+        <p class="p-sueldo">$ 1.300.000 <span>por mes</span></p>
+        <div class="p-tags"><span class="pt pt-negro">Ventas</span><span class="pt pt-blanco">Medio tiempo</span></div>
+        <button class="p-mini">Inscribirme</button>
+      </article>
+    </div>
+    <div class="p-pie">
+      <div class="swatches">
+        <span class="sw" style="background:#FFFDF5"></span>
+        <span class="sw" style="background:#19C6FF"></span>
+        <span class="sw" style="background:#7C3AED"></span>
+        <span class="sw" style="background:#17110C"></span>
+      </div>
+      <span class="nota">Cian #19C6FF · Uva #7C3AED · Negro</span>
+    </div>
+  </section>
+
+
+  <div style="max-width:1080px; margin:0 auto 40px; padding:0 20px; text-align:center; color:#5A5A66; font-size:13px;">
+    ¿Ninguna? Dime los colores que imaginas (ej: "verde manzana con violeta") o elige una y la ajusto.
+  </div>
+
+  <script>
+    var elegido = document.getElementById('elegido');
+    var elegidoNombre = document.getElementById('elegido-nombre');
+    var secciones = document.querySelectorAll('.pop');
+
+    document.querySelectorAll('.elegir').forEach(function (boton) {
+      boton.addEventListener('click', function () {
+        secciones.forEach(function (s) { s.classList.remove('seleccionado'); });
+        var sec = boton.closest('.pop');
+        sec.classList.add('seleccionado');
+        elegidoNombre.textContent = sec.querySelector('.opc-bar b').textContent;
+        elegido.style.display = 'block';
+        elegido.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  </script>
+
+</body>
+</html>

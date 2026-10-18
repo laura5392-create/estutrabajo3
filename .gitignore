@@ -1,0 +1,33 @@
+# Cosas que NUNCA deben subirse a GitHub
+
+# Dependencias (aquí no se usan, pero por si acaso)
+node_modules/
+
+# Archivos de Vercel (contienen datos del proyecto en línea)
+.vercel/
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Archivos de registro
+*.log
+npm-debug.log*
+
+# Claves secretas (por si alguien las pegó por error)
+.env
+.env.local
+.env*.local
+
+# Documentos de Word con datos personales
+*.docx
+
+# Bases de datos locales, por si alguien las crea
+*.sqlite
+*.db

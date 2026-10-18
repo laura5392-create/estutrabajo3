@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" width="800" height="500">
+  <title>Ilustración de un puesto de venta en tienda</title>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F2F7FF"/>
+      <stop offset="1" stop-color="#DCE9FE"/>
+    </linearGradient>
+    <linearGradient id="mostrador" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E2EAF7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#fondo)"/>
+
+  <!-- Círculos decorativos -->
+  <circle cx="660" cy="95" r="58" fill="#0F7BFF" opacity=".10"/>
+  <circle cx="120" cy="415" r="42" fill="#F59E0B" opacity=".12"/>
+  <circle cx="95" cy="80" r="22" fill="#0F7BFF" opacity=".10"/>
+
+  <!-- Tejado / toldo -->
+  <rect x="180" y="120" width="440" height="86" rx="12" fill="#0F7BFF"/>
+  <g fill="#FFFFFF" opacity=".92">
+    <rect x="192" y="132" width="49" height="26" rx="5"/>
+    <rect x="260" y="132" width="49" height="26" rx="5"/>
+    <rect x="328" y="132" width="49" height="26" rx="5"/>
+    <rect x="396" y="132" width="49" height="26" rx="5"/>
+    <rect x="464" y="132" width="49" height="26" rx="5"/>
+    <rect x="532" y="132" width="49" height="26" rx="5"/>
+    <rect x="192" y="170" width="49" height="26" rx="5"/>
+    <rect x="260" y="170" width="49" height="26" rx="5"/>
+    <rect x="328" y="170" width="49" height="26" rx="5"/>
+    <rect x="396" y="170" width="49" height="26" rx="5"/>
+    <rect x="464" y="170" width="49" height="26" rx="5"/>
+    <rect x="532" y="170" width="49" height="26" rx="5"/>
+  </g>
+
+  <!-- Estantería con productos -->
+  <rect x="215" y="222" width="370" height="128" rx="10" fill="#FFFFFF" stroke="#C7D8F5" stroke-width="3"/>
+  <g>
+    <rect x="238" y="242" width="40" height="34" rx="6" fill="#F59E0B"/>
+    <rect x="288" y="246" width="34" height="30" rx="6" fill="#0F7BFF"/>
+    <rect x="332" y="240" width="44" height="36" rx="6" fill="#22C55E"/>
+    <rect x="386" y="246" width="34" height="30" rx="6" fill="#EC4899"/>
+    <rect x="430" y="242" width="40" height="34" rx="6" fill="#8B5CF6"/>
+    <rect x="480" y="246" width="34" height="30" rx="6" fill="#F59E0B"/>
+    <rect x="524" y="240" width="40" height="36" rx="6" fill="#0F7BFF"/>
+  </g>
+  <line x1="228" y1="296" x2="572" y2="296" stroke="#C7D8F5" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Mostrador -->
+  <rect x="180" y="350" width="440" height="104" rx="14" fill="url(#mostrador)" stroke="#C7D8F5" stroke-width="3"/>
+  <line x1="400" y1="358" x2="400" y2="446" stroke="#C7D8F5" stroke-width="3"/>
+
+  <!-- Caja registradora -->
+  <rect x="212" y="316" width="76" height="40" rx="8" fill="#1F2937"/>
+  <rect x="224" y="300" width="52" height="20" rx="5" fill="#0F7BFF"/>
+  <circle cx="232" cy="356" r="4" fill="#22C55E"/>
+  <circle cx="248" cy="356" r="4" fill="#F59E0B"/>
+  <circle cx="264" cy="356" r="4" fill="#EF4444"/>
+
+  <!-- Bolsa de compra -->
+  <path d="M470 314h72l-8 42h-56z" fill="#F59E0B"/>
+  <path d="M488 314a18 18 0 0 1 36 0" fill="none" stroke="#B45309" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Cliente de espaldas -->
+  <circle cx="655" cy="300" r="34" fill="#1F2937"/>
+  <path d="M604 470c0-46 23-84 51-84s51 38 51 84z" fill="#1F2937"/>
+
+  <!-- Etiqueta de precio -->
+  <g transform="translate(150 250) rotate(-8)">
+    <rect width="86" height="62" rx="8" fill="#FFFFFF" stroke="#0F7BFF" stroke-width="3"/>
+    <text x="43" y="30" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#0F7BFF" text-anchor="middle">$</text>
+    <text x="43" y="49" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#6B7280" text-anchor="middle">precio</text>
+  </g>
+</svg>

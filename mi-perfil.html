@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Aplica el tema guardado ANTES de pintar la pagina (evita el destello blanco).
+       Debe quedar aqui: antes de cualquier <link> de estilos. theme.js lo confirma despues. -->
+  <script>
+    (function () {
+      try {
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+      } catch (e) { /* localStorage bloqueado: se queda en claro */ }
+    })();
+  </script>
+
+  <title>Mi perfil - EstuTrabajo</title>
+
+  <meta name="description" content="Completa tu perfil para encontrar empleos que se adapten a ti. Tus datos se actualizan en vivo mientras escribes.">
+  <meta name="theme-color" content="#C6F24E">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23C6F24E'/%3E%3Cpath fill='%2317110C' d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+  <a href="#contenido" class="skip-link">Saltar al contenido principal</a>
+
+  <noscript>
+    <p class="sin-noscript">
+      Activa JavaScript para guardar tu perfil y ver la vista previa mientras escribes.
+    </p>
+  </noscript>
+
+  <header class="encabezado">
+
+    <div class="contenedor barra-superior">
+
+      <a class="marca" href="index.html"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</a>
+
+      <nav class="menu" aria-label="Menú principal" id="menu-principal">
+        <a href="index.html">Inicio</a>
+        <a href="buscar-empleos.html">Buscar empleos</a>
+        <a class="activo" href="mi-perfil.html" aria-current="page">Mi perfil</a>
+      </nav>
+
+      <a class="boton" href="buscar-empleos.html">Ver ofertas</a>
+
+    </div>
+
+    <!-- Búsqueda principal, estilo portal de empleo -->
+    <div class="busqueda-principal">
+      <div class="contenedor">
+        <form action="buscar-empleos.html" method="get" role="search">
+
+          <label class="campo-busqueda" for="que-buscar">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input
+              type="search"
+              id="que-buscar"
+              name="busqueda"
+              placeholder="Qué: tienda, tutoría..."
+              autocomplete="off"
+            >
+          </label>
+
+          <label class="campo-busqueda" for="donde-buscar">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <select id="donde-buscar" name="ciudad">
+              <option value="">Dónde: todas las ciudades</option>
+              <option value="Bogotá">Bogotá</option>
+              <option value="Medellín">Medellín</option>
+              <option value="Manizales">Manizales</option>
+                <option value="Pensilvania">Pensilvania, Caldas</option>
+              <option value="Cali">Cali</option>
+              <option value="Pereira">Pereira</option>
+              <option value="Ibagué">Ibagué</option>
+            </select>
+          </label>
+
+          <button type="submit" class="boton">Buscar Empleo</button>
+
+        </form>
+      </div>
+    </div>
+
+  </header>
+
+
+  <main id="contenido">
+
+    <section class="titulo-pagina">
+
+      <div class="contenedor">
+
+        <p class="etiqueta">Tu información</p>
+
+        <h1>
+          Mi <span class="resaltado">perfil</span>
+        </h1>
+
+        <p>
+          Completa tus datos y mira cómo se ve tu perfil
+          en vivo mientras escribes.
+        </p>
+
+      </div>
+
+    </section>
+
+
+<section class="formulario-seccion">
+
+      <div class="contenedor">
+
+        <!-- ==================================================================
+             Acceso: registro e inicio de sesión
+             Mientras Supabase no esté configurado (js/config.js), este bloque
+             se oculta solo y el formulario sigue funcionando con localStorage.
+             ================================================================== -->
+        <div class="panel-acceso" id="panel-acceso" hidden>
+
+          <div class="panel-acceso-cabecera">
+            <h2>Mi cuenta</h2>
+            <p id="acceso-mensaje" role="status" aria-live="polite"></p>
+          </div>
+
+          <!-- Estado: sin sesión -->
+          <div id="acceso-sin-sesion">
+
+            <form class="formulario acceso-formulario" id="formulario-acceso">
+              <div class="campo">
+                <label for="acceso-correo">Correo electrónico</label>
+                <input
+                  type="email"
+                  id="acceso-correo"
+                  placeholder="tucorreo@ejemplo.com"
+                  autocomplete="email"
+                  required
+                >
+              </div>
+
+              <div class="campo">
+                <label for="acceso-password">Contraseña</label>
+                <input
+                  type="password"
+                  id="acceso-password"
+                  placeholder="Mínimo 6 caracteres"
+                  autocomplete="current-password"
+                  minlength="6"
+                  required
+                >
+              </div>
+
+              <div class="formulario-acciones">
+                <button type="submit" class="boton" id="boton-entrar">Entrar</button>
+                <button type="button" class="boton boton-ghost" id="boton-registro">
+                  Crear cuenta
+                </button>
+              </div>
+
+              <p class="acceso-ayuda">
+                Con tu cuenta tu perfil se guarda en la nube y lo ves desde
+                cualquier celular o computador.
+              </p>
+            </form>
+          </div>
+
+          <!-- Estado: con sesión -->
+          <div id="acceso-con-sesion" hidden>
+            <div class="sesion-activa">
+              <p>
+                Sesión iniciada como
+                <strong id="sesion-correo"></strong>
+              </p>
+              <button type="button" class="boton boton-ghost" id="boton-salir">
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    <section class="formulario-seccion">
+
+      <div class="contenedor perfil-grid">
+
+        <form class="formulario" id="formulario-perfil">
+
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              placeholder="Escribe tu nombre"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="campo">
+            <label for="estudios">¿Qué estudias?</label>
+            <input
+              type="text"
+              id="estudios"
+              placeholder="Ej: Diseño de interfaces web"
+              required
+            >
+          </div>
+
+          <div class="campo">
+            <label for="habilidades">Habilidades</label>
+            <input
+              type="text"
+              id="habilidades"
+              placeholder="Ej: Atención al cliente"
+            >
+          </div>
+
+          <div class="campo">
+            <label for="disponibilidad">Disponibilidad</label>
+            <input
+              type="text"
+              id="disponibilidad"
+              placeholder="Ej: Lunes a viernes en la tarde"
+            >
+          </div>
+
+          <div class="formulario-acciones">
+            <button type="submit" class="boton">
+              Guardar perfil
+            </button>
+
+            <button
+              type="button"
+              class="boton boton-ghost"
+              id="limpiar-perfil"
+            >
+              Limpiar
+            </button>
+          </div>
+
+          <p class="aviso-perfil" id="aviso-perfil" role="status" aria-live="polite"></p>
+
+        </form>
+
+
+        <aside class="vista-previa" aria-live="polite">
+
+          <h3>Así se ve tu perfil</h3>
+
+          <div class="avatar-preview"><i class="fa-solid fa-user" aria-hidden="true"></i></div>
+
+          <div class="dato-vista">
+            <span>Nombre</span>
+            <strong id="vista-nombre">Tu nombre...</strong>
+          </div>
+
+          <div class="dato-vista">
+            <span>Estudios</span>
+            <strong id="vista-estudios">Lo que estudias</strong>
+          </div>
+
+          <div class="dato-vista">
+            <span>Habilidades</span>
+            <strong id="vista-habilidades">Tus habilidades</strong>
+          </div>
+
+          <div class="dato-vista">
+            <span>Disponibilidad</span>
+            <strong id="vista-disponibilidad">Tu disponibilidad</strong>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+    <section class="formulario-seccion mis-postulaciones-seccion" id="mis-postulaciones" hidden>
+
+      <div class="contenedor">
+
+        <h2>Mis postulaciones</h2>
+
+        <p id="postulaciones-mensaje" role="status" aria-live="polite"></p>
+
+        <ul class="lista-postulaciones" id="lista-postulaciones"></ul>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer class="pie-pagina">
+
+    <div class="contenedor">
+
+      <div class="pie-contenido">
+
+        <div class="pie-marca">
+
+          <p class="pie-titulo"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> EstuTrabajo</p>
+
+          <p>
+            Empleos flexibles para estudiantes
+            que quieren estudiar y trabajar.
+          </p>
+
+        </div>
+
+        <div class="pie-columna">
+
+          <p class="pie-titulo">Páginas</p>
+
+          <a href="index.html">Inicio</a>
+          <a href="buscar-empleos.html">Buscar empleos</a>
+          <a href="mi-perfil.html">Mi perfil</a>
+
+        </div>
+
+        <div class="pie-columna">
+
+          <p class="pie-titulo">Contacto</p>
+
+          <a href="mailto:hola@estutrabajo.co">hola@estutrabajo.co</a>
+          <a href="#">@estutrabajo</a>
+
+        </div>
+
+      </div>
+
+      <p class="pie-copy">
+        © 2026 EstuTrabajo · Diseño de interfaces web
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/perfil.js"></script>
+  <script src="js/mis-postulaciones.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/theme.js"></script>
+
+</body>
+
+</html>

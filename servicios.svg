@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" width="800" height="500">
+  <title>Ilustración de un puesto de servicios</title>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F0FBF8"/>
+      <stop offset="1" stop-color="#D9F2EC"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#fondo)"/>
+
+  <circle cx="115" cy="95" r="48" fill="#14B8A6" opacity=".12"/>
+  <circle cx="690" cy="400" r="54" fill="#F59E0B" opacity=".12"/>
+  <circle cx="680" cy="100" r="26" fill="#14B8A6" opacity=".12"/>
+
+  <!-- Barra de cafetería -->
+  <rect x="90" y="120" width="250" height="176" rx="16" fill="#FFFFFF" stroke="#B6E5DC" stroke-width="3"/>
+  <rect x="90" y="120" width="250" height="34" rx="16" fill="#14B8A6"/>
+  <rect x="90" y="140" width="250" height="14" fill="#14B8A6"/>
+
+  <!-- Taza de café -->
+  <g transform="translate(140 186)">
+    <path d="M0 0h96v44a48 48 0 0 1-96 0z" fill="#FFFFFF" stroke="#0F766E" stroke-width="4"/>
+    <path d="M96 12h20a22 22 0 0 1 0 44h-20" fill="none" stroke="#0F766E" stroke-width="4"/>
+    <ellipse cx="48" cy="44" rx="40" ry="8" fill="#0F766E" opacity=".35"/>
+    <path d="M28-22c0-10 10-10 10-20M48-26c0-10 10-10 10-20M68-22c0-10 10-10 10-20" fill="none" stroke="#14B8A6" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+  </g>
+
+  <!-- Tostada / galleta -->
+  <g transform="translate(258 214)">
+    <circle cx="0" cy="0" r="34" fill="#F59E0B"/>
+    <circle cx="-11" cy="-9" r="5" fill="#B45309"/>
+    <circle cx="12" cy="-6" r="5" fill="#B45309"/>
+    <circle cx="-4" cy="13" r="5" fill="#B45309"/>
+    <circle cx="13" cy="14" r="4" fill="#B45309"/>
+  </g>
+
+  <!-- Barra deOverflow inferior -->
+  <rect x="60" y="322" width="310" height="26" rx="13" fill="#FFFFFF" stroke="#B6E5DC" stroke-width="3"/>
+
+  <!-- Libro / biblioteca -->
+  <g transform="translate(432 176)">
+    <!-- Libro abierto -->
+    <path d="M0 0c34-16 68-16 100 0v128c-32-16-66-16-100 0z" fill="#FFFFFF" stroke="#0F766E" stroke-width="4"/>
+    <path d="M100 0c34-16 68-16 100 0v128c-32-16-66-16-100 0z" fill="#FFFFFF" stroke="#0F766E" stroke-width="4"/>
+    <line x1="100" y1="2" x2="100" y2="126" stroke="#0F766E" stroke-width="4"/>
+    <g fill="#14B8A6" opacity=".38">
+      <rect x="18" y="24" width="64" height="7" rx="3.5"/>
+      <rect x="18" y="42" width="64" height="7" rx="3.5"/>
+      <rect x="18" y="60" width="48" height="7" rx="3.5"/>
+      <rect x="118" y="24" width="64" height="7" rx="3.5"/>
+      <rect x="118" y="42" width="64" height="7" rx="3.5"/>
+      <rect x="118" y="60" width="40" height="7" rx="3.5"/>
+    </g>
+  </g>
+
+  <!-- Lámpara / colgante -->
+  <g transform="translate(690 210)">
+    <line x1="0" y1="-110" x2="0" y2="0" stroke="#0F766E" stroke-width="4"/>
+    <path d="M-40 34a40 40 0 0 1 80 0z" fill="#F59E0B"/>
+    <path d="M-40 34a40 40 0 0 1 80 0z" fill="none" stroke="#0F766E" stroke-width="4"/>
+    <ellipse cx="0" cy="34" rx="40" ry="7" fill="#0F766E" opacity=".25"/>
+    <circle cx="0" cy="52" r="11" fill="#FBBF24" opacity=".8"/>
+  </g>
+
+  <!-- Mesa -->
+  <rect x="70" y="416" width="660" height="22" rx="11" fill="#0F766E"/>
+  <rect x="104" y="438" width="22" height="30" rx="7" fill="#115E59"/>
+  <rect x="674" y="438" width="22" height="30" rx="7" fill="#115E59"/>
+
+  <!-- Plato -->
+  <g transform="translate(400 396)">
+    <ellipse cx="0" cy="0" rx="58" ry="14" fill="#FFFFFF" stroke="#B6E5DC" stroke-width="3"/>
+    <ellipse cx="0" cy="-3" rx="38" ry="9" fill="#14B8A6" opacity=".18"/>
+  </g>
+</svg>

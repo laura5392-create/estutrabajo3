@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" width="800" height="500">
+  <title>Ilustración de un cafetal en ladera</title>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EFF6E8"/>
+      <stop offset="1" stop-color="#DCE9CE"/>
+    </linearGradient>
+    <linearGradient id="cerro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7E9AA6"/>
+      <stop offset="1" stop-color="#5D7C89"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#fondo)"/>
+
+  <!-- Sol -->
+  <circle cx="128" cy="96" r="44" fill="#F4C95D" opacity=".45"/>
+
+  <!-- Montañas al fondo (Cordillera Central) -->
+  <path d="M330 262l112-128 74 84 46-52 88 96z" fill="url(#cerro)" opacity=".5"/>
+  <path d="M560 262l62-70 54 70z" fill="url(#cerro)" opacity=".35"/>
+  <!-- Nieve en la cima -->
+  <path d="M442 134l-26 30 26-16 26 16z" fill="#FFFFFF" opacity=".8"/>
+
+  <!-- Laderas con surcos -->
+  <path d="M0 320c150-42 290-40 430-10 140 30 250 34 370 12v178H0z" fill="#9BB77A"/>
+  <path d="M0 356c170-30 300-24 430 4 130 28 240 30 370 8v132H0z" fill="#7FA05C"/>
+  <g stroke="#6B8C4C" stroke-width="4" stroke-linecap="round" opacity=".55">
+    <path d="M40 400c120-24 240-20 350 2"/>
+    <path d="M80 434c130-22 250-18 360 4"/>
+    <path d="M300 380c120-18 240-12 340 8"/>
+    <path d="M420 430c110-12 210-4 300 10"/>
+  </g>
+
+  <!-- Cafetos en primer plano -->
+  <g>
+    <rect x="96" y="352" width="10" height="66" rx="4" fill="#5C4630"/>
+    <circle cx="101" cy="336" r="42" fill="#4F7A3A"/>
+    <circle cx="84" cy="320" r="18" fill="#5F8F45"/>
+    <circle cx="118" cy="324" r="15" fill="#5F8F45"/>
+  </g>
+  <g>
+    <rect x="256" y="366" width="9" height="58" rx="4" fill="#5C4630"/>
+    <circle cx="260" cy="352" r="36" fill="#456B33"/>
+    <circle cx="246" cy="338" r="15" fill="#568038"/>
+  </g>
+
+  <!-- Cereza de café en detalle -->
+  <g transform="translate(636 300)">
+    <ellipse cx="0" cy="46" rx="15" ry="17" fill="#C0392B"/>
+    <ellipse cx="4" cy="38" rx="12" ry="14" fill="#D14A3A"/>
+    <path d="M-4 26c0-14 8-22 20-24" fill="none" stroke="#5C4630" stroke-width="6" stroke-linecap="round"/>
+    <path d="M2 14c8-8 20-8 26 2-10 6-20 4-26-2z" fill="#4F7A3A"/>
+  </g>
+
+  <!-- Canasta de recolección -->
+  <g transform="translate(596 396)">
+    <path d="M0 0h84l-10 44H10z" fill="#D9A441"/>
+    <path d="M0 0h84l-3 12H3z" fill="#C08E2E"/>
+    <g fill="#7E4B2A">
+      <circle cx="20" cy="-6" r="9"/><circle cx="38" cy="-10" r="9"/>
+      <circle cx="56" cy="-6" r="9"/><circle cx="30" cy="-18" r="9"/>
+      <circle cx="48" cy="-18" r="9"/>
+    </g>
+  </g>
+
+  <!-- Etiqueta de kilo -->
+  <g transform="translate(150 130) rotate(-6)">
+    <rect width="98" height="58" rx="9" fill="#FFFFFF" stroke="#4F7A3A" stroke-width="3"/>
+    <text x="49" y="28" font-family="Inter, sans-serif" font-size="19" font-weight="700" fill="#4F7A3A" text-anchor="middle">+kg</text>
+    <text x="49" y="46" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#6B8C4C" text-anchor="middle">bonificación</text>
+  </g>
+
+  <!-- Niebla baja entre laderas -->
+  <ellipse cx="300" cy="292" rx="220" ry="14" fill="#FFFFFF" opacity=".38"/>
+  <ellipse cx="600" cy="304" rx="180" ry="12" fill="#FFFFFF" opacity=".3"/>
+</svg>
